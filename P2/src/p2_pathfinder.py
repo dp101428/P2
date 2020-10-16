@@ -57,7 +57,7 @@ def find_path (source_point, destination_point, mesh):
             path[0] = nextNode
             priorNode = cameFrom[nextNode]
             while priorNode is not None:
-                path.prepend(priorNode)
+                path.insert(0, priorNode)
                 priorNode = cameFrom[priorNode]
             break
         
