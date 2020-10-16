@@ -17,6 +17,12 @@ def find_path (source_point, destination_point, mesh):
 
 #identify the source and Destination boxes
 
+
+Typing under first heading
+
+
+
+
 #Modify your Dijkstra's search to compute a legal list of line segments demonstrating the path
 
 #Convert Dijkstra's into A*
