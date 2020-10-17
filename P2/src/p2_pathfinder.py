@@ -66,7 +66,7 @@ def find_path (source_point, destination_point, mesh):
             break
         
         #Otherwise, keep finding things to put in the queue
-        for box in mesh["edges"][nextNode]:
+        for box in mesh["adj"][nextNode]:
             if(box not in cameFrom):
                 toSearch.append(box)
                 cameFrom[box] = nextNode
