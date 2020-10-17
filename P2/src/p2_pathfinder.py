@@ -27,10 +27,12 @@ def find_path (source_point, destination_point, mesh):
         print(element)
         if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] >= element[2]) and (source_point[1] <= element[3])):
             startingBox = (element)
-            print("Starting Box found at: " + element)
+            print("Starting Box found at: ")
+            print(element)
         if((destination_point[0] >= element[0]) and (destination_point[0] <= element[1]) and (destination_point[1] <= element[2]) and (destination_point[1] >= element[3])):
             goalBox = (element)
-            print("Goal Box found at: " + element)
+            print("Goal Box found at: ")
+            print(element)
 
 
 
