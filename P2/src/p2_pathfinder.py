@@ -24,6 +24,7 @@ def find_path (source_point, destination_point, mesh):
 
 
     for element in boxes:
+<<<<<<< HEAD
        	if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] <= element[2]) and (source_point[1] >= element[3])):
 	    startingBox = (element)
 	    print("Starting Box found at: " + element)
@@ -31,6 +32,14 @@ def find_path (source_point, destination_point, mesh):
 	    goalBox = (element)
 	    print("Goal Box found at: " + element)
 
+=======
+        if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] <= element[2]) and (source_point[1] >= element[3])):
+            startingBox = (element)
+            print("Starting Box found at: " + element)
+        if((destination_point[0] >= element[0]) and (destination_point[0] <= element[1]) and (destination_point[1] <= element[2]) and (destination_point[1] >= element[3])):
+            goalBox = (element)
+            print("Goal Box found at: " + element)
+>>>>>>> b15087f5c8274161c761d7846776f5d79e4c8ee0
 
 
 	#scan through boxes to find the destination point
@@ -58,7 +67,7 @@ def find_path (source_point, destination_point, mesh):
             path[0] = nextNode
             priorNode = cameFrom[nextNode]
             while priorNode is not None:
-                path.prepend(priorNode)
+                path.insert(0, priorNode)
                 priorNode = cameFrom[priorNode]
             break
         
