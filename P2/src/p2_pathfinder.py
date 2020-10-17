@@ -58,7 +58,7 @@ def find_path (source_point, destination_point, mesh):
         #See if it's the goal
         if nextNode == goalBox:
             #Do this later
-            path[0] = nextNode
+            path.append(nextNode)
             priorNode = cameFrom[nextNode]
             while priorNode is not None:
                 path.insert(0, priorNode)
