@@ -50,7 +50,8 @@ def find_path (source_point, destination_point, mesh):
     #First we're just doing a basic BFS
     toSearch = [startingBox]
     cameFrom = {startingBox : None}
-
+    #Adding a record of the point location within the box
+    boxes[startingBox] = source_point
     #While there's things to search
     while toSearch:
         #Get the next thing to check
@@ -70,6 +71,7 @@ def find_path (source_point, destination_point, mesh):
             if(box not in cameFrom):
                 toSearch.append(box)
                 cameFrom[box] = nextNode
+                boxes[box] = shortest_path_to_box(boxes[nextNode], nextNode, box)
     if not path:
         return "No Path!"
 
