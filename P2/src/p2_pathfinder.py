@@ -79,6 +79,52 @@ def find_path (source_point, destination_point, mesh):
 
 #Modify your A* into a Bidirectional A*
 
+
+#use the shortest_path_to_box function to find the precise path between boxes
+
+
+
+
+
+
+
+
+
     return path, boxes.keys()
+
+
+
+#implement the shortest_path_to_box function
+
+
+def shortest_path_to_box(current_point, current_box, new_box):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
