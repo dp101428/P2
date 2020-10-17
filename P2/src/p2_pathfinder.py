@@ -19,11 +19,11 @@ def find_path (source_point, destination_point, mesh):
 #identify the source and Destination boxes
 	#scan through boxes to find which contains the source point
 
-    boxes = mesh["boxes"]
+    box = mesh["boxes"]
 
     print(mesh)
 
-    for element in boxes:
+    for element in box:
         print(element)
         if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] >= element[2]) and (source_point[1] <= element[3])):
             startingBox = (element)
