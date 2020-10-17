@@ -72,8 +72,9 @@ def find_path (source_point, destination_point, mesh):
                 cameFrom[box] = nextNode
     if not path:
         return "No Path!"
-    
 
+    #Debug since currently it doesn't draw
+    print(path)
 #Convert Dijkstra's into A*
 
 #Modify your A* into a Bidirectional A*
