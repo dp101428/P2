@@ -99,8 +99,42 @@ def find_path (source_point, destination_point, mesh):
 
 def shortest_path_to_box(current_point, current_box, new_box):
 
+    new_x1 = new_box[0]
+    new_x2 = new_box[1]
+    new_y1 = new_box[2]
+    new_y2 = new_box[3]
+
+    cur_x1 = current_box[0]
+    cur_x2 = current_box[1]
+    cur_y1 = current_box[2]
+    cur_y2 = current_box[3]
 
 
+    if(current_point[0] >= new_x2 and current_point[1] >= new_y2):
+        return ((new_x2,new_y2))
+
+    if(current_point[0] <= new_x1 and current_point[1] >= new_y2):
+        return ((new_x1,new_y2))
+
+    if(current_point[0] <= new_x1 and current_point[1] <= new_y1):
+        return ((new_x1,new_y2))
+
+    if(current_point[0] >= new_x2 and current_point[1] <= new_y1):
+        return ((new_x2,new_y1))
+
+
+    if(current_point[0] >= new_x1 and current_point[0] <= new_x2):
+        if(current_point[1] >= new_y2):
+            return((current_point[0],new_y2))
+        else:
+            return((current_point[0],new_y1))
+
+    if(current_point[1] >=new_y1 and current_point[1] <=new_y2):
+        if(current_point[0] >= new_x2):
+            return((new_x2,current_point[1]))
+        else:
+            return((new_x1,current_point[1]))
+    return((0,0))
 
 
 
