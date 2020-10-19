@@ -89,17 +89,17 @@ def find_path (source_point, destination_point, mesh):
             if (goal == "dest"):
                 if(box in costToBack):
                     #Do this later
-                    path.append(boxes[nextNode])
+                    path.append(boxes[box])
                     priorNode = cameFromBack[box]
                     while priorNode is not None:
                         path.append(boxes[priorNode])
                         priorNode = cameFromBack[priorNode]
-                    path.append(destination_point)
+                    #path.append(destination_point)
                     priorNode = cameFromFront[nextNode]
                     while priorNode is not None:
                         path.insert(0,boxes[priorNode])
                         priorNode = cameFromFront[priorNode]
-                    path.insert(source_point)
+                    #path.insert(source_point)
                     return resolvePathfinding(path, boxes)
                 estToEnd = math.sqrt((destination_point[0] -pathToNew[0]) * (destination_point[0] -pathToNew[0]) + (destination_point[1] -pathToNew[1]) * (destination_point[1] -pathToNew[1]))
                 totalCostTo = costToFront[nextNode] + lengthOfPath
@@ -116,12 +116,12 @@ def find_path (source_point, destination_point, mesh):
                     while priorNode is not None:
                         path.append(boxes[priorNode])
                         priorNode = cameFromBack[priorNode]
-                    path.append(destination_point)
+                    #path.append(destination_point)
                     priorNode = cameFromFront[box]
                     while priorNode is not None:
                         path.insert(0,boxes[priorNode])
                         priorNode = cameFromFront[priorNode]
-                    path.insert(0, source_point)
+                    #path.insert(0, source_point)
                     return resolvePathfinding(path, boxes)
                 estToEnd = math.sqrt((source_point[0] -pathToNew[0]) * (source_point[0] -pathToNew[0]) + (source_point[1] -pathToNew[1]) * (source_point[1] -pathToNew[1]))
                 totalCostTo = costToBack[nextNode] + lengthOfPath
