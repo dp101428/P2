@@ -1,4 +1,5 @@
 from heapq import heappop, heappush
+import math
 def find_path (source_point, destination_point, mesh):
 
     """
@@ -50,6 +51,7 @@ def find_path (source_point, destination_point, mesh):
     #First we're just doing a basic BFS
     toSearch = [startingBox]
     cameFrom = {startingBox : None}
+    costTo = {startingBox : 0}
     #Adding a record of the point location within the box
     boxes[startingBox] = source_point
     #While there's things to search
@@ -69,10 +71,14 @@ def find_path (source_point, destination_point, mesh):
         
         #Otherwise, keep finding things to put in the queue
         for box in mesh["adj"][nextNode]:
-            if(box not in cameFrom):
+            pathToNew = shortest_path_to_box(boxes[nextNode], nextNode, box)
+            lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1])
+            totalCostTo = costTo[nextNode] + lengthOfPath
+            if(box not in cameFrom or costTo[box] > totalCostTo):
                 toSearch.append(box)
                 cameFrom[box] = nextNode
-                boxes[box] = shortest_path_to_box(boxes[nextNode], nextNode, box)
+                boxes[box] = pathToNew
+                costTo[box] = totalCostTo
     if not path:
         return "No Path!"
 
