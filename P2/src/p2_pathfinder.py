@@ -150,14 +150,14 @@ def shortest_path_to_box(current_point, current_box, new_box):
 
     if current_point[0] <= xBorder[0] :
     	returnx = xBorder[0]
-    else if current_point[0] <= xBorder[1] :
+    elif current_point[0] <= xBorder[1] :
     	returnx = current_point[0]
     else :
     	returnx = xBorder[1]
 
     if current_point[1] <= xBorder[2] :
     	returny = xBorder[2]
-    else if current_point[1] <= xBorder[3] :
+    elif current_point[1] <= xBorder[3] :
     	returny = current_point[1]
     else :
     	returny = xBorder[3]
