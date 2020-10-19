@@ -60,7 +60,7 @@ def find_path (source_point, destination_point, mesh):
         nextNodeCost, nextNode = heappop(toSearch)
 
         #Find the heuristic from this point to the end
-        estToEnd = math.sqrt(boxes[nextNode][0] * boxes[nextNode][0] + boxes[nextNode][1] * boxes[nextNode[1]])
+        estToEnd = math.sqrt(boxes[nextNode][0] * boxes[nextNode][0] + boxes[nextNode][1] * boxes[nextNode][1])
         #See if it's the goal
         if nextNode == goalBox:
             #Do this later
