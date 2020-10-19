@@ -95,6 +95,7 @@ def find_path (source_point, destination_point, mesh):
                         path.append(boxes[priorNode])
                         priorNode = cameFromBack[priorNode]
                     #path.append(destination_point)
+                    path.insert(0, boxes[nextNode])
                     priorNode = cameFromFront[nextNode]
                     while priorNode is not None:
                         path.insert(0,boxes[priorNode])
