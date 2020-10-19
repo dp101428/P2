@@ -25,7 +25,7 @@ def find_path (source_point, destination_point, mesh):
     print(mesh)
 
     for element in box:
-        print(element)
+        #print(element)
         if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] >= element[2]) and (source_point[1] <= element[3])):
             startingBox = (element)
             print("Starting Box found at: ")
@@ -88,6 +88,7 @@ def find_path (source_point, destination_point, mesh):
             lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1])
             if (goal == "dest"):
                 if(box in costToBack):
+                    print(goal)
                     #Do this later
                     path.append(boxes[box])
                     priorNode = cameFromBack[box]
@@ -111,6 +112,7 @@ def find_path (source_point, destination_point, mesh):
                     costToFront[box] = totalCostTo
             else:
                 if(box in costToFront):
+                    print(goal)
                     #Do this later
                     path.append(boxes[nextNode])
                     priorNode = cameFromBack[nextNode]
