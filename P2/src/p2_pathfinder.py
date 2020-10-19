@@ -88,7 +88,7 @@ def find_path (source_point, destination_point, mesh):
         #Otherwise, keep finding things to put in the queue
         for box in mesh["adj"][nextNode]:
             pathToNew = shortest_path_to_box(boxes[nextNode], nextNode, box)
-            lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1])
+            lengthOfPath = pythagDist(pathToNew[0], pathToNew[1], boxes[nextNode][0], boxes[nextNode][0])
             if (goal == "dest"):
                 if(box in costToBack):
                     path.append(pathToNew)
@@ -109,7 +109,7 @@ def find_path (source_point, destination_point, mesh):
                         priorNode = cameFromFront[priorNode]
                     #path.insert(source_point)
                     return resolvePathfinding(path, boxes)
-                estToEnd = math.sqrt((destination_point[0] -pathToNew[0]) * (destination_point[0] -pathToNew[0]) + (destination_point[1] -pathToNew[1]) * (destination_point[1] -pathToNew[1]))
+                estToEnd = pythagDist(destination_point[0], destination_point[1], pathToNew[0], pathToNew[1])
                 totalCostTo = costToFront[nextNode] + lengthOfPath
                 if(box not in cameFromFront or costToFront[box] > totalCostTo +  + estToEnd):
                     heappush(toSearch, (totalCostTo  + estToEnd, box, goal))
@@ -136,7 +136,7 @@ def find_path (source_point, destination_point, mesh):
                         priorNode = cameFromFront[priorNode]
                     #path.insert(0, source_point)
                     return resolvePathfinding(path, boxes)
-                estToEnd = math.sqrt((source_point[0] -pathToNew[0]) * (source_point[0] -pathToNew[0]) + (source_point[1] -pathToNew[1]) * (source_point[1] -pathToNew[1]))
+                estToEnd = pythagDist(source_point[0], source_point[1], pathToNew[0], pathToNew[1])
                 totalCostTo = costToBack[nextNode] + lengthOfPath
                 if(box not in cameFromBack or costToBack[box] > totalCostTo  + estToEnd):
                     heappush(toSearch, (totalCostTo + estToEnd, box, goal))
@@ -234,28 +234,5 @@ def shortest_path_to_box(current_point, current_box, new_box):
     return (returnx, returny)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def pythagDist(x0,y0, x1, y1):
+    return (math.sqrt((x1-x0) * (x1-x0) + (y1-y0) * (y1-y0)))
