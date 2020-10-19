@@ -49,19 +49,28 @@ def find_path (source_point, destination_point, mesh):
 #Modify your Dijkstra's search to compute a legal list of line segments demonstrating the path
     #set up data structures for search
     #First we're just doing a basic BFS
-    toSearch = [(0,startingBox)]
-    cameFrom = {startingBox : None}
-    costTo = {startingBox : 0}
+    toSearch = [(0,startingBox, "dest")]
+    heappush(toSearch, (0, goalBox, "start"))
+    
+    cameFromFront = {startingBox : None}
+    costToFront = {startingBox : 0}
+    cameFromBack = {goalBox : None}
+    costToBack = {goalBox : 0}
     #Adding a record of the point location within the box
     boxes[startingBox] = source_point
+    boxes[goalBox] = destination_point
     #While there's things to search
     while toSearch:
         #Get the next thing to check
-        nextNodeCost, nextNode = heappop(toSearch)
+        nextNodeCost, nextNode, goal = heappop(toSearch)
 
         #Find the heuristic from this point to the end
-        estToEnd = math.sqrt(boxes[nextNode][0] * boxes[nextNode][0] + boxes[nextNode][1] * boxes[nextNode][1])
+        if(goal == "dest"):
+            estToEnd = math.sqrt((destination_point[0] -boxes[nextNode][0]) * (destination_point[0] -boxes[nextNode][0]) + (destination_point[1] -boxes[nextNode][1]) * (destination_point[1] -boxes[nextNode][1]))
+        else:
+            estToEnd = math.sqrt((source_point[0] -boxes[nextNode][0]) * (source_point[0] -boxes[nextNode][0]) + (source_point[1] -boxes[nextNode][1]) * (source_point[1] -boxes[nextNode][1]))
         #See if it's the goal
+        """
         if nextNode == goalBox:
             #Do this later
             path.append(boxes[nextNode])
@@ -71,17 +80,56 @@ def find_path (source_point, destination_point, mesh):
                 path.insert(0, boxes[priorNode])
                 priorNode = cameFrom[priorNode]
             break
+        """
         
         #Otherwise, keep finding things to put in the queue
         for box in mesh["adj"][nextNode]:
             pathToNew = shortest_path_to_box(boxes[nextNode], nextNode, box)
-            lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1]) + estToEnd
-            totalCostTo = costTo[nextNode] + lengthOfPath
-            if(box not in cameFrom or costTo[box] > totalCostTo):
-                heappush(toSearch, (totalCostTo, box))
-                cameFrom[box] = nextNode
-                boxes[box] = pathToNew
-                costTo[box] = totalCostTo
+            lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1])
+            if (goal == "dest"):
+                if(box in costToBack):
+                    #Do this later
+                    path.append(boxes[nextNode])
+                    priorNode = cameFromBack[box]
+                    while priorNode is not None:
+                        path.append(boxes[priorNode])
+                        priorNode = cameFromBack[priorNode]
+                    path.append(destination_point)
+                    priorNode = cameFromFront[nextNode]
+                    while priorNode is not None:
+                        path.insert(0,boxes[priorNode])
+                        priorNode = cameFromFront[priorNode]
+                    path.insert(source_point)
+                    return resolvePathfinding(path, boxes)
+                estToEnd = math.sqrt((destination_point[0] -pathToNew[0]) * (destination_point[0] -pathToNew[0]) + (destination_point[1] -pathToNew[1]) * (destination_point[1] -pathToNew[1]))
+                totalCostTo = costToFront[nextNode] + lengthOfPath
+                if(box not in cameFromFront or costToFront[box] > totalCostTo +  + estToEnd):
+                    heappush(toSearch, (totalCostTo  + estToEnd, box))
+                    cameFromFront[box] = nextNode
+                    boxes[box] = pathToNew
+                    costToFront[box] = totalCostTo
+            else:
+                if(box in costToFront):
+                    #Do this later
+                    path.append(boxes[nextNode])
+                    priorNode = cameFromBack[nextNode]
+                    while priorNode is not None:
+                        path.append(boxes[priorNode])
+                        priorNode = cameFromBack[priorNode]
+                    path.append(destination_point)
+                    priorNode = cameFromFront[box]
+                    while priorNode is not None:
+                        path.insert(0,boxes[priorNode])
+                        priorNode = cameFromFront[priorNode]
+                    path.insert(source_point)
+                    return resolvePathfinding(path, boxes)
+                estToEnd = math.sqrt((source_point[0] -pathToNew[0]) * (source_point[0] -pathToNew[0]) + (source_point[1] -pathToNew[1]) * (source_point[1] -pathToNew[1]))
+                totalCostTo = costToBack[nextNode] + lengthOfPath
+                if(box not in cameFromBack or costToBack[box] > totalCostTo  + estToEnd):
+                    heappush(toSearch, (totalCostTo + estToEnd, box))
+                    cameFromBack[box] = nextNode
+                    boxes[box] = pathToNew
+                    costToBack[box] = totalCostTo
     if not path:
         return "No Path!"
 
@@ -108,6 +156,11 @@ def find_path (source_point, destination_point, mesh):
 
 #implement the shortest_path_to_box function
 
+def resolvePathfinding(path, boxes):
+    if not path:
+        return "No Path!"
+    print (path)
+    return path, boxes.keys()
 
 def shortest_path_to_box(current_point, current_box, new_box):
     """
