@@ -78,7 +78,7 @@ def find_path (source_point, destination_point, mesh):
             lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1]) + estToEnd
             totalCostTo = costTo[nextNode] + lengthOfPath
             if(box not in cameFrom or costTo[box] > totalCostTo):
-                peappush(toSearch, (totalCostTo, box))
+                heappush(toSearch, (totalCostTo, box))
                 cameFrom[box] = nextNode
                 boxes[box] = pathToNew
                 costTo[box] = totalCostTo
