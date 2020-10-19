@@ -104,7 +104,7 @@ def find_path (source_point, destination_point, mesh):
                 estToEnd = math.sqrt((destination_point[0] -pathToNew[0]) * (destination_point[0] -pathToNew[0]) + (destination_point[1] -pathToNew[1]) * (destination_point[1] -pathToNew[1]))
                 totalCostTo = costToFront[nextNode] + lengthOfPath
                 if(box not in cameFromFront or costToFront[box] > totalCostTo +  + estToEnd):
-                    heappush(toSearch, (totalCostTo  + estToEnd, box))
+                    heappush(toSearch, (totalCostTo  + estToEnd, box, goal))
                     cameFromFront[box] = nextNode
                     boxes[box] = pathToNew
                     costToFront[box] = totalCostTo
@@ -126,7 +126,7 @@ def find_path (source_point, destination_point, mesh):
                 estToEnd = math.sqrt((source_point[0] -pathToNew[0]) * (source_point[0] -pathToNew[0]) + (source_point[1] -pathToNew[1]) * (source_point[1] -pathToNew[1]))
                 totalCostTo = costToBack[nextNode] + lengthOfPath
                 if(box not in cameFromBack or costToBack[box] > totalCostTo  + estToEnd):
-                    heappush(toSearch, (totalCostTo + estToEnd, box))
+                    heappush(toSearch, (totalCostTo + estToEnd, box, goal))
                     cameFromBack[box] = nextNode
                     boxes[box] = pathToNew
                     costToBack[box] = totalCostTo
