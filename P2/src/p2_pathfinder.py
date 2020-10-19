@@ -144,7 +144,7 @@ def find_path (source_point, destination_point, mesh):
                     boxes[box] = pathToNew
                     costToBack[box] = totalCostTo
     if not path:
-        return "No Path!"
+        print("No Path")
 
     #Debug since currently it doesn't draw
     print(path)
@@ -171,7 +171,7 @@ def find_path (source_point, destination_point, mesh):
 
 def resolvePathfinding(path, boxes):
     if not path:
-        return "No Path!"
+        return "No Path"
     print (path)
     return path, boxes.keys()
 
