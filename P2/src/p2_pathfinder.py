@@ -23,7 +23,8 @@ def find_path (source_point, destination_point, mesh):
     box = mesh["boxes"]
 
     #print(mesh)
-
+    startingBox = None
+    goalBox = None
     for element in box:
         #print(element)
         if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] >= element[2]) and (source_point[1] <= element[3])):
@@ -35,7 +36,9 @@ def find_path (source_point, destination_point, mesh):
             print("Goal Box found at: ")
             print(element)
 
-
+    if(startingBox == None or goalBox == None):
+        print("No Path")
+        return path, boxes.keys()
 
 	#scan through boxes to find the destination point
 
