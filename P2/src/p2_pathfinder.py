@@ -62,7 +62,7 @@ def find_path (source_point, destination_point, mesh):
         if nextNode == goalBox:
             #Do this later
             path.append(destination_point)
-            boxes[nextNode] = destination_point
+            path.append(boxes[nextNode])
             priorNode = cameFrom[nextNode]
             while priorNode is not None:
                 path.insert(0, boxes[priorNode])
