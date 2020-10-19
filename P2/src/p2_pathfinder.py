@@ -121,7 +121,7 @@ def find_path (source_point, destination_point, mesh):
                     while priorNode is not None:
                         path.insert(0,boxes[priorNode])
                         priorNode = cameFromFront[priorNode]
-                    path.insert(source_point)
+                    path.insert(0, source_point)
                     return resolvePathfinding(path, boxes)
                 estToEnd = math.sqrt((source_point[0] -pathToNew[0]) * (source_point[0] -pathToNew[0]) + (source_point[1] -pathToNew[1]) * (source_point[1] -pathToNew[1]))
                 totalCostTo = costToBack[nextNode] + lengthOfPath
