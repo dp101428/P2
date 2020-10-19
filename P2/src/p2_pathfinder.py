@@ -49,7 +49,7 @@ def find_path (source_point, destination_point, mesh):
 #Modify your Dijkstra's search to compute a legal list of line segments demonstrating the path
     #set up data structures for search
     #First we're just doing a basic BFS
-    toSearch = [startingBox]
+    toSearch = [(0,startingBox)]
     cameFrom = {startingBox : None}
     costTo = {startingBox : 0}
     #Adding a record of the point location within the box
@@ -57,7 +57,10 @@ def find_path (source_point, destination_point, mesh):
     #While there's things to search
     while toSearch:
         #Get the next thing to check
-        nextNode = toSearch.pop(0)
+        nextNodeCost, nextNode = heappop(toSearch)
+
+        #Find the heuristic from this point to the end
+        estToEnd = math.sqrt(boxes[nextNode][0] * boxes[nextNode][0] + boxes[nextNode][1] * boxes[nextNode[1]])
         #See if it's the goal
         if nextNode == goalBox:
             #Do this later
@@ -72,10 +75,10 @@ def find_path (source_point, destination_point, mesh):
         #Otherwise, keep finding things to put in the queue
         for box in mesh["adj"][nextNode]:
             pathToNew = shortest_path_to_box(boxes[nextNode], nextNode, box)
-            lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1])
+            lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1]) + estToEnd
             totalCostTo = costTo[nextNode] + lengthOfPath
             if(box not in cameFrom or costTo[box] > totalCostTo):
-                toSearch.append(box)
+                peappush(toSearch, (totalCostTo, box))
                 cameFrom[box] = nextNode
                 boxes[box] = pathToNew
                 costTo[box] = totalCostTo
