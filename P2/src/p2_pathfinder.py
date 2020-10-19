@@ -88,6 +88,7 @@ def find_path (source_point, destination_point, mesh):
             lengthOfPath = math.sqrt(pathToNew[0] * pathToNew[0] + pathToNew[1] * pathToNew[1])
             if (goal == "dest"):
                 if(box in costToBack):
+                    path.append(pathToNew)
                     print(goal)
                     print(boxes[box])
                     print(boxes[nextNode])
