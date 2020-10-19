@@ -115,6 +115,7 @@ def find_path (source_point, destination_point, mesh):
                     costToFront[box] = totalCostTo
             else:
                 if(box in costToFront):
+                    path.append(pathToNew)
                     print(goal)
                     print(boxes[box])
                     print(boxes[nextNode])
