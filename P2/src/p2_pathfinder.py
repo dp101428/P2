@@ -208,6 +208,7 @@ def shortest_path_to_box(current_point, current_box, new_box, goalPoint):
     """
     xBorder = (max(current_box[0], new_box[0]), min(current_box[1], new_box[1]))
     yBorder = (max(current_box[2], new_box[2]), min(current_box[3], new_box[3]))
+    #"Simple version of the algorithm that just finds the shortest path to a new point in the new box"
     """
     if current_point[0] <= xBorder[0] :
     	returnx = xBorder[0]
@@ -223,6 +224,7 @@ def shortest_path_to_box(current_point, current_box, new_box, goalPoint):
     else :
     	returny = yBorder[1]
     """
+    #More complex/overdone algorithm that uses the heuristic for better point selection within the new box
     returnx = -1
     returny = -1
     #If the border is parallel with the x axix, constrain x
