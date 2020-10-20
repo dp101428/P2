@@ -29,12 +29,8 @@ def find_path (source_point, destination_point, mesh):
         #print(element)
         if((source_point[0] >= element[0]) and (source_point[0] <= element[1]) and (source_point[1] >= element[2]) and (source_point[1] <= element[3])):
             startingBox = (element)
-            print("Starting Box found at: ")
-            print(element)
         if((destination_point[0] >= element[0]) and (destination_point[0] <= element[1]) and (destination_point[1] >= element[2]) and (destination_point[1] <= element[3])):
             goalBox = (element)
-            print("Goal Box found at: ")
-            print(element)
 
     if(startingBox == None or goalBox == None):
         print("No Path")
@@ -42,7 +38,7 @@ def find_path (source_point, destination_point, mesh):
 
     #If both the destination and the source are in the same box, shortcut everything
     if(startingBox == goalBox):
-        return [source_point, destination_point], {startingBox : source_point}
+        return [source_point, destination_point], [startingBox]
 
 
 
@@ -66,29 +62,18 @@ def find_path (source_point, destination_point, mesh):
     while toSearch:
         #Get the next thing to check
         nextNodeCost, nextNode, goal = heappop(toSearch)
-
+        #nextNodeCost is never used, only exists for the heap functions to sort using
         #Find the heuristic from this point to the end
         if(goal == "dest"):
             estToEnd = math.sqrt((destination_point[0] -boxes[nextNode][0]) * (destination_point[0] -boxes[nextNode][0]) + (destination_point[1] -boxes[nextNode][1]) * (destination_point[1] -boxes[nextNode][1]))
         else:
             estToEnd = math.sqrt((source_point[0] -boxes[nextNode][0]) * (source_point[0] -boxes[nextNode][0]) + (source_point[1] -boxes[nextNode][1]) * (source_point[1] -boxes[nextNode][1]))
-        #See if it's the goal
-        """
-        if nextNode == goalBox:
-            #Do this later
-            path.append(boxes[nextNode])
-            path.append(destination_point)
-            priorNode = cameFrom[nextNode]
-            while priorNode is not None:
-                path.insert(0, boxes[priorNode])
-                priorNode = cameFrom[priorNode]
-            break
-        """
         
-        #Otherwise, keep finding things to put in the queue
+        
+        #Keep finding things to put in the queue
         for box in mesh["adj"][nextNode]:
             pathToNew = shortest_path_to_box(boxes[nextNode], nextNode, box, source_point if  goal == "start" else destination_point)
-            lengthOfPath = pythagDist(pathToNew[0], pathToNew[1], boxes[nextNode][0], boxes[nextNode][0])
+            lengthOfPath = pythagDist(pathToNew[0], pathToNew[1], boxes[nextNode][0], boxes[nextNode][1])
             if (goal == "dest"):
                 if(box in costToBack):
                     path.append(pathToNew)
@@ -144,14 +129,6 @@ def find_path (source_point, destination_point, mesh):
     if not path:
         print("No Path")
 
-    #Debug since currently it doesn't draw
-    print(path)
-
-
-
-
-
-
 
 
 
@@ -163,52 +140,13 @@ def find_path (source_point, destination_point, mesh):
 
 def resolvePathfinding(path, boxes):
     if not path:
-        return "No Path"
-    print (path)
+        print ("No Path")
     return path, boxes.keys()
 
 def shortest_path_to_box(current_point, current_box, new_box, goalPoint):
-    """
-    new_x1 = new_box[0]
-    new_x2 = new_box[1]
-    new_y1 = new_box[2]
-    new_y2 = new_box[3]
-
-    cur_x1 = current_box[0]
-    cur_x2 = current_box[1]
-    cur_y1 = current_box[2]
-    cur_y2 = current_box[3]
-
-
-    if(current_point[0] >= new_x2 and current_point[1] >= new_y2):
-        return ((new_x2,new_y2))
-
-    if(current_point[0] <= new_x1 and current_point[1] >= new_y2):
-        return ((new_x1,new_y2))
-
-    if(current_point[0] <= new_x1 and current_point[1] <= new_y1):
-        return ((new_x1,new_y2))
-
-    if(current_point[0] >= new_x2 and current_point[1] <= new_y1):
-        return ((new_x2,new_y1))
-
-
-    if(current_point[0] >= new_x1 and current_point[0] <= new_x2):
-        if(current_point[1] >= new_y2):
-            return((current_point[0],new_y2))
-        else:
-            return((current_point[0],new_y1))
-
-    if(current_point[1] >=new_y1 and current_point[1] <=new_y2):
-        if(current_point[0] >= new_x2):
-            return((new_x2,current_point[1]))
-        else:
-            return((new_x1,current_point[1]))
-    return((0,0))
-    """
     xBorder = (max(current_box[0], new_box[0]), min(current_box[1], new_box[1]))
     yBorder = (max(current_box[2], new_box[2]), min(current_box[3], new_box[3]))
-    #"Simple version of the algorithm that just finds the shortest path to a new point in the new box"
+    #"Simple" version of the algorithm that just finds the shortest path to a new point in the new box
     """
     if current_point[0] <= xBorder[0] :
     	returnx = xBorder[0]
